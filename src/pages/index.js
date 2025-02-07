@@ -1,8 +1,5 @@
 import Head from "next/head";
 
-// import dynamic from 'next/dynamic'
-// const Template = dynamic(() => import("../components/Template"), { ssr: false });
-
 import Template from "@/components/Template";
 
 export default function Home() {

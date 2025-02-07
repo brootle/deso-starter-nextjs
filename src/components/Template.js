@@ -1,7 +1,5 @@
-// import dynamic from 'next/dynamic'
 import { useState, useEffect, useRef } from "react"
 import { identity, configure } from 'deso-protocol'
-//const {identity}  = dynamic(() => import('@deso-core/identity'), { ssr: false })
 
 import {
   getSingleProfile,
