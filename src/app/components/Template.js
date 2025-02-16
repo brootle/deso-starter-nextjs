@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect, useRef } from "react"
 import { identity, configure } from 'deso-protocol'
 
@@ -6,7 +8,7 @@ import {
   createSubmitPostTransaction,
   avatarUrl,
   timestampToDate
-} from '../utils/deso-api'
+} from '@/app/utils/deso-api'
 
 
 export default function Template() {

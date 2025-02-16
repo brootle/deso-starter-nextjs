@@ -1,5 +1,5 @@
 {
-  "name": "deso-starter-nextjs",
+  "name": "deso-starter-nextjs--app-router",
   "version": "0.1.0",
   "private": true,
   "scripts": {
