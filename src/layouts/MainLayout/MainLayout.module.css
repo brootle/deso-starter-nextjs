@@ -1,0 +1,22 @@
+.container{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.mainContainer {
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 0 var(--container-sides-padding);
+
+    margin-top: var(--navbar-height);
+    margin-bottom: var(--footer-height);
+}

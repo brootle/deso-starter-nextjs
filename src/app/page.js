@@ -1,12 +1,9 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
-import Template from '@/app/components/Template';
-
 export default function Home() {
   return (
-    <>
-      <Template />
-    </>
+    <div>
+      {/* <Template /> */}
+      <h1>Home Page</h1>
+      <p>This is a simple Home page.</p>      
+    </div>
   );
 }

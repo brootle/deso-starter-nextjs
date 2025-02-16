@@ -1,0 +1,16 @@
+.container{
+    bottom: 0;
+    height: var(--footer-height);
+    justify-content: space-between;
+
+    align-items: center;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background: #0000004f;
+    box-sizing: border-box;
+    display: flex;
+    padding: 11px var(--container-sides-padding);
+    position: fixed;
+    width: 100%;
+    z-index: 99990;
+}
