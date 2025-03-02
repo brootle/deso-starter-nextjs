@@ -1,6 +1,7 @@
 import '@/styles/global.css'
 
 import { AuthProvider } from "@/context/AuthContext";
+import { UserProvider } from "@/context/UserContext";
 
 import { MainLayout } from "@/layouts/MainLayout";
 
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en" style={{colorScheme: 'dark'}}>
       <body>
         <AuthProvider>
-          <MainLayout>{children}</MainLayout>
+          <UserProvider>
+            <MainLayout>{children}</MainLayout>
+          </UserProvider>
         </AuthProvider>
       </body>
     </html>
