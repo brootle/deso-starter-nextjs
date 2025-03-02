@@ -1,7 +1,6 @@
 "use client";
 
-import styles from './Navbar.module.css';
-
+import styles from "./Navbar.module.css";
 import { useAuth } from "@/context/AuthContext";
 
 export const Navbar = () => {
@@ -10,24 +9,18 @@ export const Navbar = () => {
   return (
     <nav className={styles.container}>
       <div>
-        {
-          isUserPublicKeyLoading && <div>checking...</div>
-        }        
+        {isUserPublicKeyLoading && <div>Checking...</div>}
       </div>
 
-      <div>
-
-      </div>
+      <div></div>
 
       <div>
         {userPublicKey ? (
-          <>
-            Logged in as: {userPublicKey} <button onClick={logout}>Log out</button>
-          </>
+          <button onClick={logout} disabled={isUserPublicKeyLoading}>Log out</button>
         ) : (
-          <button onClick={login}>Log in</button>
-        )}        
+          <button onClick={login} disabled={isUserPublicKeyLoading}>Log in</button>
+        )}
       </div>
     </nav>
   );
-}
+};
