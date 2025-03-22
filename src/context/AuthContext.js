@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
     identity.subscribe((state) => {
       const { currentUser, alternateUsers, event } = state;
       console.log("Identity State:", state);
+      console.log({alternateUsers})
 
       switch (event) {
         case "SUBSCRIBE":
