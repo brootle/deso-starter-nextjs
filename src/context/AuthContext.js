@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
           setAltUsers(alternateUsers || {});
           setIsUserPublicKeyLoading(false);          
           break;          
-        case "LOGOUT_END":
+        case "LOGOUT_END": // on logout end we can set 1st available alt user if we want
           setUserPublicKey(currentUser?.publicKey || null);
           setAltUsers(alternateUsers || {});
           setIsUserPublicKeyLoading(false);

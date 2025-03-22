@@ -43,6 +43,7 @@ export const Navbar = () => {
             </select>         
           }        
         </div>
+        <div><button onClick={login} disabled={isUserPublicKeyLoading}>Add User</button></div>
         <div>
           {userPublicKey ? (
             <button onClick={logout} disabled={isUserPublicKeyLoading}>Log out</button>
