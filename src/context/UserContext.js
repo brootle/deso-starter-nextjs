@@ -13,12 +13,12 @@ export function UserProvider({ children }) {
 
   // single profile
   const [userProfile, setUserProfile] = useState(null);
-  const [isUserProfileLoading, setIsUserProfileLoading] = useState(false);
+  const [isUserProfileLoading, setIsUserProfileLoading] = useState(true);
   const [userProfileError, setUserProfileError] = useState(null);
 
   // alt user profiles
   const [altUserProfiles, setAltUserProfiles] = useState(null);
-  const [isAltUserProfileSLoading, setIsAltUserProfilesLoading] = useState(false);
+  const [isAltUserProfileSLoading, setIsAltUserProfilesLoading] = useState(true);
   const [altUserProfilesError, setAltUserProfilesError] = useState(null);  
 
   // fetch auth user profile

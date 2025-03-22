@@ -3,6 +3,8 @@
 import { useAuth } from "@/context/AuthContext";
 import { useUser } from "@/context/UserContext";
 
+import { avatarUrl } from "@/utils/profileUtils";
+
 export default function Home() {
   const { userPublicKey, isUserPublicKeyLoading } = useAuth();
   const { userProfile, isUserProfileLoading, userProfileError } = useUser();
@@ -27,8 +29,8 @@ export default function Home() {
       {/* Show User Profile Info */}
       {userProfile && (
         <div>
-          <h2>{userProfile.ExtraData?.DisplayName || "Unknown User"}</h2>
-          <img src={userProfile.ExtraData?.LargeProfilePicURL} alt="Profile" width="100" />
+          <h2>{userProfile.ExtraData?.DisplayName || userProfile.Username }</h2>
+          <img src={avatarUrl(userProfile)} alt="Profile" width="100" />
           <p>{userProfile.Description}</p>
         </div>
       )}

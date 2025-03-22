@@ -33,6 +33,10 @@ export function AuthProvider({ children }) {
         case "SUBSCRIBE":
         case "LOGIN_END":
         case "CHANGE_ACTIVE_USER":
+          setUserPublicKey(currentUser?.publicKey || null);
+          setAltUsers(alternateUsers || {});
+          setIsUserPublicKeyLoading(false);          
+          break;          
         case "LOGOUT_END":
           setUserPublicKey(currentUser?.publicKey || null);
           setAltUsers(alternateUsers || {});
@@ -50,8 +54,14 @@ export function AuthProvider({ children }) {
     await identity.logout();
   };
 
+  const setActiveUser = (publicKey) => {
+    if (publicKey) {
+      identity.setActiveUser(publicKey);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ userPublicKey, login, logout, altUsers, isUserPublicKeyLoading }}>
+    <AuthContext.Provider value={{ userPublicKey, login, logout, setActiveUser, altUsers, isUserPublicKeyLoading }}>
       {children}
     </AuthContext.Provider>
   );

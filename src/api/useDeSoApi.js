@@ -1,8 +1,9 @@
 import { useMemo, useCallback } from "react";
 import { createApiHandler } from "./apiDeSoUtils";
+import { DESO_API_BASE } from "@/config/desoConfig";
 
 export function useDeSoApi() {
-  const baseUrl = "https://node.deso.org/api/v0";
+  const baseUrl = DESO_API_BASE;
   const apiRequest = useMemo(() => createApiHandler({ baseUrl }), [baseUrl]);
 
   const getSingleProfile = useCallback((params) => {

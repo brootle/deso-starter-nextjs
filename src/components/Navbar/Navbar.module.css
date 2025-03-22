@@ -15,3 +15,9 @@
     width: 100%;
     z-index: 99990;
 }
+
+.auth{
+    display: flex;
+    align-items: center;
+    gap: 15px;    
+}
