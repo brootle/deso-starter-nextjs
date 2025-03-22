@@ -11,8 +11,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>This is a simple Home page.</p>
+      <h1>DeSo App</h1>
 
       {/* Public Key Loading State */}
       {isUserPublicKeyLoading && <p>Checking authentication...</p>}
