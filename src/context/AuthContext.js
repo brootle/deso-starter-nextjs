@@ -60,8 +60,24 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const signTransaction = async (TransactionHex) => {
+    return await identity.signTx(TransactionHex);
+  };
+  
+  const submitTransaction = async (TransactionHex) => {
+    return await identity.submitTx(TransactionHex);
+  };  
+
+  // can just use this instead of signTransaction and submitTransaction
+  const signAndSubmitTransaction = async (TransactionHex) => {
+    return await identity.signAndSubmit({ TransactionHex });
+  };
+
   return (
-    <AuthContext.Provider value={{ userPublicKey, login, logout, setActiveUser, altUsers, isUserPublicKeyLoading }}>
+    <AuthContext.Provider value={{ 
+      userPublicKey, login, logout, setActiveUser, altUsers, isUserPublicKeyLoading,
+      signTransaction, submitTransaction, signAndSubmitTransaction 
+    }}>
       {children}
     </AuthContext.Provider>
   );

@@ -35,10 +35,50 @@ export function useDeSoApi() {
     });
   }, [apiRequest]);    
 
+  const createSubmitPostTransaction = useCallback((params) => {
+    const {
+      UpdaterPublicKeyBase58Check,
+      ParentStakeID = "",
+      RepostedPostHashHex = "",
+      PostHashHexToModify = "",
+      Body = "",
+      ImageURLs = null,
+      VideoURLs = null,
+      PostExtraData = null,
+      MinFeeRateNanosPerKB,
+    } = params;
+  
+    const payload = {
+      UpdaterPublicKeyBase58Check,
+      PostHashHexToModify,
+      ParentStakeID,
+      Title: "",
+      BodyObj: {
+        Body,
+        ImageURLs,
+        VideoURLs,
+      },
+      RepostedPostHashHex,
+      PostExtraData,
+      Sub: "",
+      IsHidden: false,
+      MinFeeRateNanosPerKB,
+      InTutorial: false,
+    };
+  
+    return apiRequest({
+      endpoint: "submit-post",
+      options: {
+        body: JSON.stringify(payload),
+      },
+    });
+  }, [apiRequest]);
+  
   return {
     getSingleProfile,
     getUsersStateless,
     getTotalSupply,
-    getExchangeRate
+    getExchangeRate,
+    createSubmitPostTransaction
   };
 }
