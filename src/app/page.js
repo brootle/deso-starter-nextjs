@@ -23,8 +23,14 @@ export default function Home() {
   // for post
   const [postText, setPostText] = useState('');
   const [loading, setLoading] = useState(false);  
+  const [postError, setPostError] = useState(null);  
 
-  const makeNewPost = async () => {
+  const handlePostChange = (event) => {
+    setPostError(null) // clears possible error from previous post attempt
+    setPostText(event.target.value);
+  };
+
+  const submitPost = async () => {
 
     setLoading(true)
 
@@ -41,6 +47,7 @@ export default function Home() {
 
       if(result.error){
           console.log("error: ", error)
+          setPostError(error)
       }
 
       if(result.success && result.data?.TransactionHex){
@@ -49,7 +56,7 @@ export default function Home() {
 
         // submittedTransaction.PostEntryResponse is posted post
         console.log({submittedTransaction})
-        
+
         setPostText(""); // ✅ clear post
       }      
 
@@ -57,6 +64,7 @@ export default function Home() {
 
     } catch (error) {
       console.log("Error: ", error)
+      setPostError(error)
       setLoading(false)
     }   
   }  
@@ -72,19 +80,24 @@ export default function Home() {
       {userPublicKey && <p><strong>Public Key:</strong> {userPublicKey}</p>}
 
       {/* User Profile Loading State */}
-      {isUserProfileLoading && <p>Loading profile...</p>}
+      {isUserProfileLoading 
+        ?
+        <p>Loading profile...</p>
+        :
+        <div>
+        {/* Show User Profile Info */}
+        {userProfile && (
+          <div>
+            <h2>{userProfile.ExtraData?.DisplayName || userProfile.Username }</h2>
+            <img src={avatarUrl(userProfile)} alt="Profile" width="100" />
+            <p>{userProfile.Description}</p>
+          </div>
+        )}
+        </div>
+      }
 
       {/* Error Handling */}
       {userProfileError && <p style={{ color: "red" }}>Error: {userProfileError}</p>}
-
-      {/* Show User Profile Info */}
-      {userProfile && (
-        <div>
-          <h2>{userProfile.ExtraData?.DisplayName || userProfile.Username }</h2>
-          <img src={avatarUrl(userProfile)} alt="Profile" width="100" />
-          <p>{userProfile.Description}</p>
-        </div>
-      )}
 
       {userPublicKey && (
         <div>
@@ -92,11 +105,12 @@ export default function Home() {
             <textarea 
               disabled={loading} 
               value={postText} 
-              onChange={(event) => setPostText(event.target.value)} 
+              onChange={handlePostChange} 
               placeholder={`Write some epic post to DeSo as ${userProfile?.Username || userPublicKey}`} 
             /> 
           </div> 
-          <button disabled={loading || !postText} onClick={makeNewPost}>Post to DeSo</button>  
+          <button disabled={loading || !postText} onClick={submitPost}>Post to DeSo</button>  
+          {postError && <p style={{ color: "red" }}>Error: {postError}</p>}
         </div>
       )}
     </div>
