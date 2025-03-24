@@ -13,7 +13,7 @@ export const Navbar = () => {
   return (
     <nav className={styles.container}>
       <div>
-        {isUserPublicKeyLoading && <div>Checking...</div>}
+        App Logo
       </div>
 
       <div></div>
@@ -21,7 +21,7 @@ export const Navbar = () => {
       <div className={styles.auth}>
         <div>
           {isAltUserProfileSLoading
-            ?<span>Loading</span>
+            ?<span>Loading...</span>
             :
             <select
               onChange={(e) => {

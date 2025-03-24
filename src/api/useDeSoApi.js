@@ -35,7 +35,7 @@ export function useDeSoApi() {
     });
   }, [apiRequest]);    
 
-  const createSubmitPostTransaction = useCallback((params) => {
+  const submitPost = useCallback((params) => {
     const {
       UpdaterPublicKeyBase58Check,
       ParentStakeID = "",
@@ -79,6 +79,6 @@ export function useDeSoApi() {
     getUsersStateless,
     getTotalSupply,
     getExchangeRate,
-    createSubmitPostTransaction
+    submitPost
   };
 }

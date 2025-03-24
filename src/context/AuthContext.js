@@ -8,7 +8,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [userPublicKey, setUserPublicKey] = useState(null);
   const [altUsers, setAltUsers] = useState({});
-  const [isUserPublicKeyLoading, setIsUserPublicKeyLoading] = useState(true);
+  const [isUserPublicKeyLoading, setIsUserPublicKeyLoading] = useState(false);
 
   const isRunned = useRef(false); // Prevents multiple initializations
 
@@ -30,6 +30,9 @@ export function AuthProvider({ children }) {
       console.log({alternateUsers})
 
       switch (event) {
+        case 'LOGIN_START':
+          setIsUserPublicKeyLoading(true); 
+          break; 
         case "SUBSCRIBE":
         case "LOGIN_END":
         case "CHANGE_ACTIVE_USER":
@@ -47,11 +50,26 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async () => {
-    await identity.login();
+    //await identity.login(); // simple
+
+    // user may close Identity window before finishing login flow
+    await identity.login().catch((err) => {
+      console.log("Error: ", err)
+      setIsUserPublicKeyLoading(false)
+    })   
+
+    // check errors here 
+    // import { ERROR_TYPES } from '@deso/identity';
   };
 
   const logout = async () => {
-    await identity.logout();
+    //await identity.logout(); // simple
+
+    // user may close Identity window before finishing logout flow
+    await identity.logout().catch((err) => {
+      console.log("Error: ", err)
+      setIsUserPublicKeyLoading(false)
+    })       
   };
 
   const setActiveUser = (publicKey) => {

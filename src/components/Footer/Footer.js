@@ -7,10 +7,10 @@ export const Footer = () => {
   return (
     <footer className={styles.container}>
         <div>
-            Left
+          Designed by <a href="https://focus.xyz/brootle" target="_blank" rel="noreferrer">brootle</a>
         </div>
         <div>
-            Right
+          Extra Info
         </div>
     </footer>
   );

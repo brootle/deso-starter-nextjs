@@ -9,6 +9,8 @@ import { useDeSoApi } from "@/api/useDeSoApi";
 
 import { avatarUrl } from "@/utils/profileUtils";
 
+import styles from "./page.module.css";
+
 export default function Home() {
 
   const { 
@@ -18,19 +20,23 @@ export default function Home() {
 
   const { userProfile, isUserProfileLoading, userProfileError } = useUser();
 
-  const { createSubmitPostTransaction } = useDeSoApi();
+  const { submitPost } = useDeSoApi();
 
   // for post
   const [postText, setPostText] = useState('');
   const [loading, setLoading] = useState(false);  
   const [postError, setPostError] = useState(null);  
+  const [lastPostTransaction, setLastPostTransaction] = useState(null);  
 
   const handlePostChange = (event) => {
-    setPostError(null) // clears possible error from previous post attempt
+    if(postError){  
+      setPostError(null) // clears possible error from previous post attempt
+    }
+
     setPostText(event.target.value);
   };
 
-  const submitPost = async () => {
+  const handleSubmitPost = async () => {
 
     setLoading(true)
 
@@ -42,7 +48,7 @@ export default function Home() {
         MinFeeRateNanosPerKB: 1500
       }    
           
-      const result = await createSubmitPostTransaction(settings)    
+      const result = await submitPost(settings)    
       console.log("createSubmitPostTransaction result: ", result)
 
       if(result.error){
@@ -52,10 +58,11 @@ export default function Home() {
 
       if(result.success && result.data?.TransactionHex){
 
-        const submittedTransaction = await signAndSubmitTransaction(result.data?.TransactionHex)
+        const postTransaction = await signAndSubmitTransaction(result.data?.TransactionHex)
 
-        // submittedTransaction.PostEntryResponse is posted post
-        console.log({submittedTransaction})
+        // postTransaction.PostEntryResponse is posted post
+        console.log({postTransaction})
+        setLastPostTransaction(postTransaction)
 
         setPostText(""); // ✅ clear post
       }      
@@ -70,49 +77,61 @@ export default function Home() {
   }  
 
   return (
-    <div>
-      <h1>DeSo App</h1>
+    <div className={styles.pageContainer}>
 
       {/* Public Key Loading State */}
-      {isUserPublicKeyLoading && <p>Checking authentication...</p>}
+      {isUserPublicKeyLoading 
+        ?<p>Checking authentication...</p>
+        :
+        <>
+          {userPublicKey && <p><strong>Public Key:</strong> {userPublicKey}</p>}        
+        </>
+      }
 
-      {/* Show Public Key */}
-      {userPublicKey && <p><strong>Public Key:</strong> {userPublicKey}</p>}
+      {/* Error Handling */}
+      {userProfileError && <p className={styles.error}>Error: {userProfileError}</p>}
+
+      {userPublicKey && (
+        <div className={styles.postContainer}>
+          <textarea 
+            disabled={loading || isUserPublicKeyLoading} 
+            value={postText} 
+            onChange={handlePostChange} 
+            placeholder={`Write some epic post to DeSo as ${userProfile?.Username || userPublicKey}`} 
+          /> 
+
+          <button disabled={loading || !postText || isUserPublicKeyLoading} onClick={handleSubmitPost}>Post to DeSo</button>  
+
+          {lastPostTransaction && lastPostTransaction?.TxnHashHex &&
+            <div>
+              Check your last post here: <a href={`https://focus.xyz/post/${lastPostTransaction?.TxnHashHex}`} target="_blank" rel="noreferrer">{lastPostTransaction?.TxnHashHex}</a>
+            </div>
+          }
+
+          {postError && <p className={styles.error}>Error: {postError}</p>}
+        </div>
+      )}      
+
 
       {/* User Profile Loading State */}
       {isUserProfileLoading 
         ?
         <p>Loading profile...</p>
         :
-        <div>
+        <>
         {/* Show User Profile Info */}
         {userProfile && (
-          <div>
-            <h2>{userProfile.ExtraData?.DisplayName || userProfile.Username }</h2>
+          <div className={styles.profileContainer}>
+            {userProfile.ExtraData?.DisplayName && <h2>{userProfile.ExtraData?.DisplayName}</h2>}
+            {userProfile.Username && <div>{userProfile.Username}</div>}
             <img src={avatarUrl(userProfile)} alt="Profile" width="100" />
             <p>{userProfile.Description}</p>
           </div>
         )}
-        </div>
+        </>
       }
 
-      {/* Error Handling */}
-      {userProfileError && <p style={{ color: "red" }}>Error: {userProfileError}</p>}
 
-      {userPublicKey && (
-        <div>
-          <div>
-            <textarea 
-              disabled={loading} 
-              value={postText} 
-              onChange={handlePostChange} 
-              placeholder={`Write some epic post to DeSo as ${userProfile?.Username || userPublicKey}`} 
-            /> 
-          </div> 
-          <button disabled={loading || !postText} onClick={submitPost}>Post to DeSo</button>  
-          {postError && <p style={{ color: "red" }}>Error: {postError}</p>}
-        </div>
-      )}
     </div>
   );
 }

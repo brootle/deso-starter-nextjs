@@ -1,0 +1,35 @@
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.postContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.postContainer textarea{
+    width: 100%;
+    margin: 0;
+    display: block;
+    outline: none;
+    resize: vertical;
+    max-height: none;
+    height: 100px;
+    min-height: 100px;
+    padding: 25px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.error{
+    color: red;
+}
+
+.profileContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
