@@ -43,7 +43,7 @@ export function UserProvider({ children }) {
       }
     } catch (error) {
       setUserProfile(null);
-      setUserProfileError(error.message);
+      setUserProfileError(error?.message || "Error loading user profile");
     } finally {
       setIsUserProfileLoading(false);
     }
@@ -76,7 +76,7 @@ export function UserProvider({ children }) {
       }
     } catch (error) {
       setAltUserProfiles(null);
-      setAltUserProfilesError(error.message);
+      setAltUserProfilesError(error?.message || "Error loading alt users profiles");
     } finally {
       setIsAltUserProfilesLoading(false);
     }

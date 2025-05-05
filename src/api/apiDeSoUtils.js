@@ -17,7 +17,7 @@ export function createApiHandler({ baseUrl }) {
         ? { success: true, data }
         : { success: false, error: data.error || "Unknown API error" };
     } catch (error) {
-      return { success: false, error: error.message || "Network error" };
+      return { success: false, error: error?.message || "Network error" };
     }
   };
 }
