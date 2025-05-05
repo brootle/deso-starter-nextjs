@@ -15,7 +15,7 @@ export function createApiHandler({ baseUrl }) {
 
       return response.ok
         ? { success: true, data }
-        : { success: false, error: data.error || "Unknown API error" };
+        : { success: false, error: data?.error || "Unknown API error" };
     } catch (error) {
       return { success: false, error: error?.message || "Network error" };
     }
